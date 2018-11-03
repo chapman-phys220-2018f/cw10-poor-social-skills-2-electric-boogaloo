@@ -1,12 +1,12 @@
 # PHYS220/MATH220/CPSC220 CW 10
 
-**Author(s):** **CHANGEME**
+**Author(s):** **Trevor Kling**
 
 ## Specification
 
 In this assignment, we will start thinking about how to solve "ordinary differential equations" numerically. These are simply equations that involve at least one derivative in the equation. We will use the intuition of the "forward difference" and "central difference" equations explored in the last classwork to develop increasingly accurate methods for numerically solving such an equation.
 
-Consider a first-order ordinary differential equation (ODE) $$u'(t) = f[t, u(t)]$$ For concrete examples, consider $u'(t) = 2 u(t)$, or $u'(t) = 2t^2u(t)$. Such an equation states that the function $f[t, u(t)]$ is the slope of $u(t)$ at the domain point $t$; to calculate this slope, one generally needs to know both the range value $u(t)$ as well as the domain point $t$. The usual task of solving such a differential equation is to start from an "initial condition" $u(t_0) = u_0$ and reconstruct what the entire function $u(t)$ must be for $t>t_0$. There are analytical methods for cleverly reconstructing such a solution (e.g., solving $u'(t) = 2u(t)$ yields $u(t) = u_0 \exp(2 t)$, which you can verify by computing its derivative and plugging it back into the original equation), but we are interesting here in how to numerically obtain the solution without using analytical methods.
+Consider a first-order ordinary differential equation (ODE) $$u'(t) = f[t, u(t)]$$ For concrete examples, consider $u'(t) = 2 u(t)$, or $u'(t) = 2t^2u(t)$. Such an equation states that the function $f[t, u(t)]$ is the slope of $u(t)$ at the domain point $t$; to calculate this slope, one generally needs to know both the range value $u(t)$ as well as the domain point $t$. The usual task of solving such a differential equation is to start from an "initial condition" $u(t_0) = u_0$ and reconstruct what the entire function $u(t)$ <div align='justify'></div>must be for $t>t_0$. There are analytical methods for cleverly reconstructing such a solution (e.g., solving $u'(t) = 2u(t)$ yields $u(t) = u_0 \exp(2 t)$, which you can verify by computing its derivative and plugging it back into the original equation), but we are interesting here in how to numerically obtain the solution without using analytical methods.
 
 To construct a solution, we first define a discrete mesh of domain points $(t_0, t_1, t_2, ..., t_N)$ with uniform spacing $\Delta t = t_{k+1} - t_k$. Starting from the initial condition $u(t_0) = u_0$, we then iteratively construct a sequence of matching range points $(u_0, u_1, u_2, ..., u_N)$, where $u_k = u(t_k)$, by using the slopes $u'(t_k)$ at each domain point. This procedure is tricky for two reasons: (1) computing the slopes $u'(t_k)$ generally requires knowledge of the function $u(t_k)$ that one is trying to reconstruct, leading to a chicken-and-egg problem; (2) the first-derivative $u'(t_k)$ can only produce a linear approximations to $u(t)$ around the point $t_k$, so will only approximate $u(t)$ if $\Delta t$ is sufficiently small. To be more explicit about this latter reason, consider the Taylor expansion of $u(t)$ around a particular point $t_k$: $$u(t_k + s) = u(t_k) + u'(t_k)s + u''(t_k)s^2/2 + u'''(t_k)s^3/3! + ...$$ Generally one will need to know all higher-order derivatives of $u(t)$ at $t=t_k$ to reconstruct the function at the point $t_k + s$. However, if $s=\Delta t$ is small, then one can approximate $(\Delta t)^2 \approx 0$, yielding $u(t_k + \Delta t) = u(t_k) + u'(t_k)\Delta t$. Thus, if one knows the slope $u'(t_k) = f[t_k, u(t_k)]$, then one obtains $u_{k+1} = u_k + \Delta t\, f[t_k, u_k]$, which allows one to obtain the next range point $u_{k+1}$ given only knowledge of the current range point $u_k$. We say this method (called "Euler's method") for obtaining $u_{k+1}$ from $u_k$ is accurate to "1st-order in $\Delta t$", since the error of this approximation scales as $(\Delta t)^2$. Observe that Euler's method corresponds to rearranging the "forward difference" definition of the derivative.
 
@@ -42,7 +42,7 @@ The goal of this assignment is to understand what these solution methods are doi
 1. 4th-order Runge-Kutta Method (accurate to 4th-order):
    
    $u_{k+1} = u_k + (K_1 + 2K_2 + 2K_3 + K_4)/6$, 
-   
+   <div align='justify'></div>
    $K_1 = \Delta t\,f[t_k,u_k]$, 
    
    $K_2 = \Delta t\, f[t_k + \Delta t/2, u_k + K_1/2]$, 
@@ -57,9 +57,7 @@ In practice, the 4th-order Runge-Kutta method is the most popular method for sol
 
 ## Assessment
 
-Analyze in this section what you found useful about this assignment in your own words. Include any lingering questions or comments that you may have. You can use the GitHub web interface to edit this file directly for now.
-
-**CHANGEME**
+In this assignment, I found the graphical analysis of the functions to be particularly helpful.  While some equations can be identified and understood purely through working with the numbers, often a graphical intuition of the problem will result in a much better understanding of how the problem responds to scaling of inputs.
 
 ## Honor Pledge
 
@@ -70,4 +68,4 @@ I pledge that all the work in this repository is my own with only the following 
 
 Signed,
 
-**YOURNAMES**
+**Trevor Kling**
